@@ -15,8 +15,4 @@ const testTree = new Tree(testArr);
 
 prettyPrint(testTree.root);
 
-console.log('delete Node 8:')
-
-testTree.deleteItem(8);
-
-prettyPrint(testTree.root);
+testTree.levelOrderForEach(console.log)

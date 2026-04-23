@@ -232,7 +232,26 @@ class Tree {
         handleDelete(parent, childrenPosition);
     }
 
+    levelOrderForEach(callback) {
+        //Edge Case: callback is not a function
+        if(typeof callback !== 'function') {
+            throw new Error('callback is required')
+        }
 
+        let queue = [];
+
+        //Edge Case: if BST is empty, do nothing
+        if(this.root === null) return;
+
+        queue.push(this.root);
+        while(queue.length !== 0) {
+            const node = queue.shift();            
+            callback(node.value);
+            if(node.leftNode !== null) queue.push(node.leftNode);
+            if(node.rightNode !== null) queue.push(node.rightNode);
+        } 
+       
+    }
 
 
 
