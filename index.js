@@ -15,4 +15,8 @@ const testTree = new Tree(testArr);
 
 prettyPrint(testTree.root);
 
-testTree.levelOrderForEach(console.log)
+testTree.preOrderForEach(console.log);
+console.log(' ');
+testTree.inOrderForEach(console.log)
+console.log(' ');
+testTree.postOrderForEach(console.log)

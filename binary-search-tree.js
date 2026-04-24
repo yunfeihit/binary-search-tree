@@ -235,7 +235,7 @@ class Tree {
     levelOrderForEach(callback) {
         //Edge Case: callback is not a function
         if(typeof callback !== 'function') {
-            throw new Error('callback is required')
+            throw new Error('callback need to be a function')
         }
 
         let queue = [];
@@ -253,6 +253,93 @@ class Tree {
        
     }
 
+    preOrderForEach(callback) {
+        //Edge Case: callback is not a function
+        if(typeof callback !== 'function') {
+            throw new Error('callback need to be a function')
+        }
+
+        //Edge Case: if BST is empty, do nothing
+        if(this.root === null) return;
+
+        const preOrderTraversal = (node) => {
+            callback(node.value);
+            if(node.leftNode !== null) {
+                preOrderTraversal(node.leftNode);
+            };
+            if(node.rightNode !== null) {
+                preOrderTraversal(node.rightNode);
+            }
+        }
+        
+        preOrderTraversal(this.root)
+    }
+
+    inOrderForEach(callback) {
+        //Edge Case: callback is not a function
+        if(typeof callback !== 'function') {
+            throw new Error('callback need to be a function')
+        }
+
+        //Edge Case: if BST is empty, do nothing
+        if(this.root === null) return;
+
+        const inOrderTraversal = (node) => {
+            if(node.leftNode !== null) {
+                inOrderTraversal(node.leftNode);
+            };
+            if(node.rightNode !== null) {
+                inOrderTraversal(node.rightNode);
+            };
+            callback(node.value);
+        }
+        
+        inOrderTraversal(this.root)
+    }
+
+    postOrderForEach(callback) {
+        //Edge Case: callback is not a function
+        if(typeof callback !== 'function') {
+            throw new Error('callback need to be a function')
+        }
+
+        //Edge Case: if BST is empty, do nothing
+        if(this.root === null) return;
+
+        const postOrderTraversal = (node) => {
+            if(node.leftNode !== null) {
+                postOrderTraversal(node.leftNode);
+            };
+            callback(node.value);
+            if(node.rightNode !== null) {
+                postOrderTraversal(node.rightNode);
+            }
+        }
+        
+        postOrderTraversal(this.root)
+    }
+
+    height(value) {
+        //Edge Case: BST is empty
+        if(this.root === null) return undefined;
+
+        const calculateHeight = (node) => {
+            let height = 0;
+            let current = node;
+            while(true) {
+                if(current.leftNode !== null || current.rightNode !== null) {
+                    if(current.leftNode !== null) {
+                        current = current.leftNode;
+                        height++;
+                    }
+                    if(current.rightNode !== null) {
+                        current = current.rightNode;
+                        height++;
+                    }
+                    if(current.leftNode === null && current.rightNode === null) return height
+                }          
+            }
+        }
 
 
 
@@ -260,6 +347,7 @@ class Tree {
 
 
 
+    }
 
 
 
