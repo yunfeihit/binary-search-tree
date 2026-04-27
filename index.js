@@ -15,8 +15,19 @@ const testTree = new Tree(testArr);
 
 prettyPrint(testTree.root);
 
-testTree.preOrderForEach(console.log);
-console.log(' ');
-testTree.inOrderForEach(console.log)
-console.log(' ');
-testTree.postOrderForEach(console.log)
+console.log('isBalanced should be true:', testTree.isBalanced());
+
+
+//test for unbalanced BST:
+const testTreeUnbalanced = new Tree([]);
+
+// manually insert in descending order → creates a skewed tree
+[10, 9, 8, 7, 6, 5, 4].forEach(v => testTreeUnbalanced.insert(v));
+
+prettyPrint(testTreeUnbalanced.root);
+
+console.log('isBalanced should be false:', testTreeUnbalanced.isBalanced());
+
+testTreeUnbalanced.rebalance();
+console.log('unbalanced tree is rebalanced:');
+prettyPrint(testTreeUnbalanced.root);

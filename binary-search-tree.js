@@ -320,38 +320,84 @@ class Tree {
     }
 
     height(value) {
-        //Edge Case: BST is empty
+        //Step 1: find the node(current)
+        //Edge Case: if BST is empty
         if(this.root === null) return undefined;
 
-        const calculateHeight = (node) => {
-            let height = 0;
-            let current = node;
-            while(true) {
-                if(current.leftNode !== null || current.rightNode !== null) {
-                    if(current.leftNode !== null) {
-                        current = current.leftNode;
-                        height++;
-                    }
-                    if(current.rightNode !== null) {
-                        current = current.rightNode;
-                        height++;
-                    }
-                    if(current.leftNode === null && current.rightNode === null) return height
-                }          
+        let current = this.root;
+        while(current !== null) {
+            if(value === current.value) {
+                break
+            } else if(value < current.value) {
+                current = current.leftNode;
+            } else {
+                current = current.rightNode;
             }
         }
 
+        if(current === null) return undefined;
+        
+        //Step 2: calculate the height of current
+        //Only consider existing node
+        const heightOfNode = (node) => {
+            //Base case: the recursion will loop until null-node
+            if(node === null) return -1;
 
+            return Math.max(heightOfNode(node.leftNode), heightOfNode(node.rightNode)) + 1
+        }
 
-
-
-
-
+        return heightOfNode(current);
     }
 
+    depth(value) {
+        //Edge Case: if BST is empty
+        if(this.root === null) return undefined;
 
+        let current = this.root;
+        let depth = 0;
+        while(current !== null) {
+            if(value === current.value) {
+                return depth;
+            } else if(value < current.value) {
+                depth++;
+                current = current.leftNode;
+            } else {
+                depth++;
+                current = current.rightNode;
+            }
+        }
 
+        if(current === null) return undefined;
+    }
 
+    isBalanced() {
+        //Predefined function
+        const heightOfNode = (node) => {
+            if(node === null) return -1;
+
+            return Math.max(heightOfNode(node.leftNode), heightOfNode(node.rightNode)) + 1
+        }
+
+        //Edge Case:
+        if(this.root === null) return true;
+
+        const balanceCheck = (node) => {
+            //Base Case: recursion will loop till null-node:
+            if(node === null) return true;
+
+            return ((Math.abs(heightOfNode(node.leftNode) - heightOfNode(node.rightNode)) <= 1) && balanceCheck(node.leftNode) && balanceCheck(node.rightNode));
+        }
+
+        return balanceCheck(this.root);
+    }
+
+    rebalance() {
+        const valuesArray = [];
+        this.levelOrderForEach(item => {
+            valuesArray.push(item)
+        });
+        this.root = this.buildBalancedBinarySearchTree(valuesArray);
+    }
 
 
 }
